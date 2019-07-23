@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+
   def create
     auth_params = Spotify.new.login(params[:spotifyUriCode])
     user_data = Spotify.new.grab_user_data(auth_params['access_token'])
@@ -14,8 +15,8 @@ class Api::V1::UsersController < ApplicationController
 
   private
 
-    def user_params(user_info)
-      params = { email: user_info['email'], display_name: user_info['display_name'], spotify_url: user_info['external_urls']['spotify'] }
-    end
+  def user_params(user_info)
+    params = { email: user_info['email'], display_name: user_info['display_name'], spotify_url: user_info['external_urls']['spotify'] }
+  end
 
 end

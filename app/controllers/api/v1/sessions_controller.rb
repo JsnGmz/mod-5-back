@@ -4,7 +4,7 @@ class Api::V1::SessionsController < ApplicationController
         client_id: ENV['CLIENT_ID'],
         response_type: 'code',
         redirect_uri: ENV['REDIRECT_URI'],
-        scope: 'user-read-email',
+        scope: 'user-read-email user-top-read',
         show_dialog: true
     }
 

@@ -15,6 +15,11 @@ class Spotify < ApplicationService
     JSON.parse(user_response.body)
   end
 
+  def grab_users_top_artists(access_token)
+    artist_info = RestClient.get('https://api.spotify.com/v1/me/top/artists', { 'Authorization': "Bearer #{access_token}"})
+    JSON.parse(artist_info)
+  end
+
   private
 
   def body_params
