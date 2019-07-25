@@ -11,22 +11,39 @@ class Spotify < ApplicationService
   end
 
   def grab_user_data(access_token)
-    user_response = RestClient.get('https://api.spotify.com/v1/me', { 'Authorization': "Bearer #{access_token}"})
+    user_response = RestClient.get(account_base_url, headers(access_token))
     JSON.parse(user_response.body)
   end
 
   def grab_users_top_artists(access_token)
-    artist_info = RestClient.get('https://api.spotify.com/v1/me/top/artists', { 'Authorization': "Bearer #{access_token}"})
+    artist_info = RestClient.get("#{account_base_url}/top/artists", headers(access_token))
     JSON.parse(artist_info)
   end
 
+  def grab_recommendation_genre(access_token, genre)
+    recommendation_response = RestClient.get("#{api_base_url}/recommendations?seed_genres=#{genre}", headers(access_token))
+    JSON.parse(recommendation_response)
+  end
+
   private
+
+  def api_base_url
+    'https://api.spotify.com/v1'
+  end
+
+  def account_base_url
+    "#{api_base_url}/me"
+  end
 
   def body_params
     body = {
       client_id: ENV['CLIENT_ID'],
       client_secret: ENV['CLIENT_SECRET']
     }
+  end
+
+  def headers(access_token)
+    { 'Authorization': "Bearer #{access_token}" }
   end
 
 end
