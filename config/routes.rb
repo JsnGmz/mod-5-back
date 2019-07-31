@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resource :session, only: %i[new create destroy]
       get 'users/:id/spotify/top/artists', to: 'spotify#grab_users_top_artists'
       get 'users/:id/spotify/recommendations/:genre', to: 'spotify#generate_recommendations'
+      get '/auto', to: 'auth#auto_login'
     end
   end
 end

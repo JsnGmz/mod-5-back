@@ -10,6 +10,16 @@ class Spotify < ApplicationService
     JSON.parse(login_response.body)
   end
 
+  def request_new_token(refresh_token)
+    body = body_params.dup
+    body[:grant_type] = 'refresh_token'
+    body[:refresh_token] = refresh_token
+    # body = { grant_type: 'refresh_token', refresh_token: refresh_token }
+    # header = { 'Authorization': "Basic #{Base64.strict_encode64(ENV['CLIENT_ID'])}:#{Base64.strict_encode64(ENV['CLIENT_SECRET'])}" }
+    reset_response = RestClient.post('https://accounts.spotify.com/api/token', body)
+    JSON.parse(reset_response)
+  end
+
   def grab_user_data(access_token)
     user_response = RestClient.get(account_base_url, headers(access_token))
     JSON.parse(user_response.body)

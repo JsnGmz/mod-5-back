@@ -11,7 +11,6 @@ class Api::V1::SessionsController < ApplicationController
     redirect_to "https://accounts.spotify.com/authorize?#{query_params.to_query}"
   end
 
-  def create
-  end
+  def create; end
 
 end
