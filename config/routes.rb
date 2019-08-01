@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get 'users/:id/spotify/recommendations/:genre', to: 'spotify#generate_recommendations'
       get '/auto', to: 'auth#auto_login'
       post '/users/:id/spotify/playlist/new', to: 'spotify#create_new_playlist'
+      post 'users/:id/spotify/playlist/track/add', to: 'spotify#add_track'
     end
   end
 end

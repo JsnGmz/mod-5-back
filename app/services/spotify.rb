@@ -46,7 +46,7 @@ class Spotify < ApplicationService
   def add_track(access_token, playlist_id, uri)
     header = headers(access_token).dup
     header['Content-Type'] = 'application/json'
-    body = { 'uris': [uri['uri']] }
+    body = { 'uris': [uri] }
     res = RestClient.post("#{api_base_url}/playlists/#{playlist_id}/tracks", JSON.generate(body), header)
     JSON.parse(res)
   end

@@ -14,9 +14,15 @@ class Api::V1::SpotifyController < ApplicationController
 
   def create_new_playlist
     playlist = Spotify.new.make_new_playlist(decoded_user_token, @user['spotify_id'])
-    uri = JSON.parse(request.body.read)
-    add_track_res = Spotify.new.add_track(decoded_user_token, playlist['id'], uri)
-    render json: { success: "Track Added to  #{playlist['name']}" } if playlist
+    render json: { playlist_id: playlist['id'] }
+  end
+
+  def add_track
+    request_body = JSON.parse(request.body.read)
+    uri = request_body['uri']
+    playlist_id = request_body['playlist_id']
+    Spotify.new.add_track(decoded_user_token, playlist_id, uri)
+    render json: { success: "Track Added to Playlist" } if playlist_id
   end
 
   private
